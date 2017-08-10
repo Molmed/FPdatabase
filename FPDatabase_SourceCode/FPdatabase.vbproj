@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <ProductVersion>8.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{279A3B8A-E8E1-44B9-BB77-8F08113B2E64}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>FPDatabase</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>FPDatabase.NonFormModule</StartupObject>
+    <AssemblyMajorVersion>1</AssemblyMajorVersion>
+    <AssemblyMinorVersion>0</AssemblyMinorVersion>
+    <AssemblyRevisionNumber>14</AssemblyRevisionNumber>
+    <GenerateRevisionNumber>True</GenerateRevisionNumber>
+    <AssemblyCompanyName>UU</AssemblyCompanyName>
+    <StartWithIE>False</StartWithIE>
+    <RootNamespace>FPDatabase</RootNamespace>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>.\bin\</OutputPath>
+    <DocumentationFile>FPDatabase.xml</DocumentationFile>
+    <DebugSymbols>True</DebugSymbols>
+    <DefineDebug>True</DefineDebug>
+    <DefineTrace>True</DefineTrace>
+    <DefineConstants>Win32=True</DefineConstants>
+    <PlatformTarget>x86</PlatformTarget>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>.\bin\</OutputPath>
+    <DocumentationFile>FPDatabase.xml</DocumentationFile>
+    <DebugSymbols>False</DebugSymbols>
+    <DefineDebug>False</DefineDebug>
+    <DefineTrace>True</DefineTrace>
+    <DefineConstants>Win32=True</DefineConstants>
+    <PlatformTarget>x86</PlatformTarget>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>none</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic.Compatibility">
+      <Name>Microsoft.VisualBasic.Compatibility</Name>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic.Compatibility.Data">
+      <Name>Microsoft.VisualBasic.Compatibility.Data</Name>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.XML">
+      <Name>System.XML</Name>
+    </Reference>
+    <COMReference Include="ADODB">
+      <Guid>{EF53050B-882E-4776-B643-EDA472E8E3F2}</Guid>
+      <Lcid>0</Lcid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <Lcid>0</Lcid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+    <COMReference Include="Microsoft.Vbe.Interop">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <Lcid>0</Lcid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+    <COMReference Include="office">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <Lcid>0</Lcid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+    <COMReference Include="Scripting">
+      <Guid>{420B2830-E718-11CF-893D-00A0C9054228}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <Lcid>0</Lcid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Microsoft.VisualBasic.Compatibility" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.vb" />
+    <Compile Include="CollectionHelp.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constants.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FormModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FPresultDB.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>FPresultDB.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FPresultDB.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddDate.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmAddDate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddDate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDeletion.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmDeletion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDeletion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLoadOrderName.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmLoadOrderName.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLoadOrderName.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPlateAdd.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmPlateAdd.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlateAdd.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPlateScheme.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmPlateScheme.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlateScheme.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPlateSchemeLoadOrder.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmPlateSchemeLoadOrder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlateSchemeLoadOrder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReadSampleName.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmReadSampleName.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReadSampleName.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSelectMasterPlate.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmSelectMasterPlate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSelectMasterPlate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSelectSampleFile.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmSelectSampleFile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSelectSampleFile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStart.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmStart.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStart.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUserName.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmUserName.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmUserName.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmViewPlate.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frmViewPlate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmViewPlate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frnSelectPlateSchemeName.Designer.vb">
+      <SubType>Code</SubType>
+      <DependentUpon>frnSelectPlateSchemeName.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frnSelectPlateSchemeName.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NonFormModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlateCoordinate.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UpgradeSupport.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WindowsAPI.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="FPresultDB.resX">
+      <DependentUpon>FPresultDB.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddDate.resX">
+      <DependentUpon>frmAddDate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDeletion.resX">
+      <DependentUpon>frmDeletion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLoadOrderName.resX">
+      <DependentUpon>frmLoadOrderName.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPlateAdd.resX">
+      <DependentUpon>frmPlateAdd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPlateScheme.resX">
+      <DependentUpon>frmPlateScheme.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPlateSchemeLoadOrder.resX">
+      <DependentUpon>frmPlateSchemeLoadOrder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReadSampleName.resX">
+      <DependentUpon>frmReadSampleName.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSelectMasterPlate.resX">
+      <DependentUpon>frmSelectMasterPlate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSelectSampleFile.resX">
+      <DependentUpon>frmSelectSampleFile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStart.resX">
+      <DependentUpon>frmStart.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUserName.resX">
+      <DependentUpon>frmUserName.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmViewPlate.resX">
+      <DependentUpon>frmViewPlate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frnSelectPlateSchemeName.resX">
+      <DependentUpon>frnSelectPlateSchemeName.vb</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

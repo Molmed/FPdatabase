@@ -1,0 +1,91 @@
+FPDatabase version history
+--------------------------
+
+1.0.0.1 - 	Non-valid build, version number discarded.
+
+1.0.0.2 -	* Upload data:	earlier version could not extract dates correctly from the ".out" file
+				for some dates.
+
+		* General:	deallocation of all forms upon closing the program.
+
+		* General:	new features and changes introduced by David.
+
+
+1.0.0.3 -	* Plate schemes:	can now create plate schemes by copying from Excel worksheets.
+
+		* Plate schemes:	all wells do not need to have a sample anymore (empty wells allowed).
+
+		* Plates/Plate schemes:	Possible to view the samples on either plates (from the Start menu) 
+					or plate schemes (when creating a plate).
+
+		(Database: not possible to create two plate schemes with the same name anymore.)
+
+1.0.0.4 -	* General:	changed all variables for database IDs from integers to longs to deal
+				with overflow problems.
+
+
+1.0.0.5 -	* General:	checks against the result database that the correct version of the
+				FP database program is running.
+
+		* Upload data:	pressing "Cancel" in the raw data file dialog no longer causes a crash.
+
+		* General:	all forms updated against the database when closed and reopened.
+
+		* Upload data:	the SNP type is verified against the assay in the result database.
+
+		* Upload data:	the filenames of the loaded raw data files and genotype files are stored
+				in the FP database.
+
+		* Upload data:	a proper error message is displayed if a well exists in the genotype file
+				but not on the plate in the database. Also, if a well exists on the plate
+				but not in the genotype file, the user is warned.
+
+		* General:	switching practice mode to "on" in ResultEntry causes the FP database
+				program to use the practice databases as well.
+
+1.0.0.6 -	* Upload data:	In the previous version, the (possibly) flipped SNP type was verified against
+				the SNP type in the genotype file. This is now changed so that the "original"
+				SNP type (as stored in the database) is verified against the SNP type in the file.
+				(Because both the assay and genotype SNP types are flipped in the same manner
+				when data is viewed, so if one is flipped, the other is also flipped.)
+
+1.0.0.7 -	<After David's changes, summer 2004. See separate list>.
+
+1.0.0.8 -	* New but unchanged build because some code files from other projects had been put in the FPdatabase
+		  folder.
+
+1.0.0.9 -	* View data:	Included the ratio unit in the view data listing.
+
+1.0.0.10 -	* Upload data:	The previous versions set some of the run information for ALL ROWS
+				in the run table to the latest uploaded data. This was changed to
+				only updated the correct rows.
+
+		* Upload data:	The program no longer crashes when Upload data is selected a second
+				time.
+
+1.0.0.11 -	* General:	It is now possible to "soft-delete" plates and plate schemes.
+
+		* Upload data:	The names for the raw data file and result file are removed from the text boxes
+				when results for a plate have been uploaded.
+
+1.0.0.12 -	* General:	Recompiled for connecting to new database server (ABACUS).
+
+1.0.0.13 -	* General:	Reads the database connections from a configuration file.
+
+
+------
+<More than 6 years without updates, last update was before 2009>
+------
+
+1.0.5543.24683		9/3 2015
+			General					The FPdatabase code is converted to the .net framework (Visaul Basic) instead of VB6, which implies
+								-> FPdatabase can be installed without explicit registration of specific ocx files
+								-> FPdatabase is compatible with Excel 2010
+
+			Upload data				Bugfix: More extensive functionality to parse date tags from raw data files (ie person A creates the file with
+								regional settings = english, person B tries open it with regional settings = swedish)
+
+1.0.5590.24238		23/4 2015
+			Create Plate Scheme			Bugfix for creating plate schemes with samples that were not previously registered in the FP database. 
+								(internal) the error occured when threr was more than one recordsets in the same transaction. This worked at the time the 
+								code was writen in VB6, but don't work in the .net network. 

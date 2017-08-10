@@ -45,3 +45,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Files and directories from Visual Studio containing non code, exe files, dlls, etc.
+.suo
+bin/
+obj/
