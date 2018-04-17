@@ -157,11 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.vb" />
-    <Compile Include="Backgrounds.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Backgrounds.resx</DependentUpon>
-    </Compile>
     <Compile Include="CollectionHelp.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -275,7 +270,12 @@
     <Compile Include="PlateCoordinate.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Settings.Designer.vb">
+    <Compile Include="Properties\Backgrounds.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Backgrounds.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -286,11 +286,6 @@
     <Compile Include="WindowsAPI.vb">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Backgrounds.resx">
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Backgrounds.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="FPresultDB.resX">
       <DependentUpon>FPresultDB.vb</DependentUpon>
     </EmbeddedResource>
@@ -333,8 +328,13 @@
     <EmbeddedResource Include="frnSelectPlateSchemeName.resX">
       <DependentUpon>frnSelectPlateSchemeName.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Backgrounds.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Backgrounds.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Settings.settings">
+    <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>

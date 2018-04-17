@@ -2,7 +2,7 @@ Option Strict Off
 Option Explicit On
 
 Imports FPDatabase.My.Resources
-
+Imports FPDatabase.Properties
 Enum Environment
     Operational
     Validation
