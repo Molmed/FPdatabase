@@ -37,6 +37,7 @@
         Me.QuitButton = New System.Windows.Forms.Button()
         Me.UploadButton = New System.Windows.Forms.Button()
         Me.ViewButton = New System.Windows.Forms.Button()
+        Me.EnvironemtIndicatorPanel = New System.Windows.Forms.Panel()
         Me.SuspendLayout()
         '
         'btnDeletion
@@ -137,12 +138,25 @@
         Me.ViewButton.Text = "View Data"
         Me.ViewButton.UseVisualStyleBackColor = False
         '
+        'EnvironemtIndicatorPanel
+        '
+        Me.EnvironemtIndicatorPanel.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.EnvironemtIndicatorPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.EnvironemtIndicatorPanel.Location = New System.Drawing.Point(16, 349)
+        Me.EnvironemtIndicatorPanel.Name = "EnvironemtIndicatorPanel"
+        Me.EnvironemtIndicatorPanel.Size = New System.Drawing.Size(121, 100)
+        Me.EnvironemtIndicatorPanel.TabIndex = 8
+        '
         'frmStart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(157, 359)
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ClientSize = New System.Drawing.Size(157, 461)
+        Me.Controls.Add(Me.EnvironemtIndicatorPanel)
         Me.Controls.Add(Me.btnDeletion)
         Me.Controls.Add(Me.btnViewPlate)
         Me.Controls.Add(Me.btnCreatePlateScheme)
@@ -159,5 +173,7 @@
         Me.ResumeLayout(False)
 
     End Sub
-#End Region 
+
+    Friend WithEvents EnvironemtIndicatorPanel As Panel
+#End Region
 End Class

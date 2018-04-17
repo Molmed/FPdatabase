@@ -1,18 +1,14 @@
 Option Strict Off
 Option Explicit On
-Module NonFormModule
-	
-	'UPGRADE_WARNING: Application will terminate when Sub Main() finishes. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="E08DDC71-66BA-424F-A612-80AF11498FF8"'
-	Public Sub Main()
-		
-		On Error GoTo Main_Error
-		
-		'----- For development purpose -------------------
-        Dim DEVELOPMENT_VERSION As Boolean
-        Dim MyfrmStart As frmStart
 
-        DEVELOPMENT_VERSION = False
-        '-------------------------------------------------
+Imports FPDatabase.Properties
+
+Module NonFormModule
+
+    'UPGRADE_WARNING: Application will terminate when Sub Main() finishes. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="E08DDC71-66BA-424F-A612-80AF11498FF8"'
+    Public Sub Main()
+
+        On Error GoTo Main_Error
 
         Dim oFPConnection As New ADODB.Connection
         Dim oGtdbConnection As New ADODB.Connection
@@ -27,8 +23,7 @@ Module NonFormModule
         oFPConnection.Open()
         oGtdbConnection.Open()
 
-        If Not DEVELOPMENT_VERSION Then
-            'UPGRADE_ISSUE: App object was not upgraded. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6B85A2A7-FE9F-4FBE-AA0C-CF11AC86A305"'
+        If Settings.Default.EnforceAppVersion Then
             If isCorrectVersion(oGtdbConnection) = False Then
                 MsgBox("Permission to database denied. You may be using an old version of this application.")
                 Exit Sub
@@ -679,200 +674,200 @@ setGenotype_Error:
             Rs.Open("SELECT SCOPE_IDENTITY()", oFPConnection)
 
             lRunId = Val(Rs.Fields(0).Value)
-			Rs.Close()
-			
-			
-			
-			' time to read the detection mode data, which will be inserted
-			' into a separate table
-			
-			'saving the detection mode
-			'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			sDetectionModeParameters(1) = oTextLine.Item(2)
-			Do While True
-				
-				
-				oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
-				
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				If oTextLine.Item(1) = "Light sensor:" Then
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(2) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Excitation side:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(3) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Emission side:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(4) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Lamp:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(5) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Readings per well:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(6) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Time between readings:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(7) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Integration time:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(8) = oTextLine.Item(2) & " " & oTextLine.Item(3)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Attenuator mode:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(9) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Motion settling time:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(10) = oTextLine.Item(2) & " " & oTextLine.Item(3)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Z Height:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(4). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(11) = oTextLine.Item(2) & " " & oTextLine.Item(3) & " " & oTextLine.Item(4)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            Rs.Close()
+
+
+
+            ' time to read the detection mode data, which will be inserted
+            ' into a separate table
+
+            'saving the detection mode
+            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            sDetectionModeParameters(1) = oTextLine.Item(2)
+            Do While True
+
+
+                oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
+
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                If oTextLine.Item(1) = "Light sensor:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(2) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Excitation side:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(3) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Emission side:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(4) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Lamp:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(5) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Readings per well:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(6) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Time between readings:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(7) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Integration time:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(8) = oTextLine.Item(2) & " " & oTextLine.Item(3)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Attenuator mode:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(9) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Motion settling time:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(10) = oTextLine.Item(2) & " " & oTextLine.Item(3)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Z Height:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(4). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(11) = oTextLine.Item(2) & " " & oTextLine.Item(3) & " " & oTextLine.Item(4)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
                 ElseIf oTextLine.Item(1) = "Excitation" Then
                     'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
                     'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
                     sDetectionModeParameters(12) = oTextLine.Item(2) & " " & oTextLine.Item(3)
                     'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Emission filter:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(13) = oTextLine.Item(2) & " " & oTextLine.Item(3)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Beamsplitter:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(14) = oTextLine.Item(2) & " " & oTextLine.Item(3)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Excitation polarizer filter:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(15) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Emission polarizer filter:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(16) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Detector counting:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(17) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Flash lamp voltage:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(18) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Delay after flash:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(19) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Sensitivity setting:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(20) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "A/D converter gain:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(21) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Integrating gain:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(22) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Max cps:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(23) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Min counts:" Then 
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(24) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Detection mode:" Then 
-					'saving the setting in the database
-					
-					SQLQuery = "INSERT INTO detection_mode( run_id, detection_mode, light_sensor, excitation_side, emission_side, lamp, readings_per_well, time_between_readings, integration_time, attenuator_mode, motion_settling_time, z_height, excitation_filter, emission_filter, beamsplitter, excitation_polarizer_filter, emission_polarizer_filter, detector_counting, flash_lamp_voltage, delay_after_flash, sensitivity_setting, ad_converter_gain, integrating_gain, max_cps, min_counts) VALUES(" & lRunId & ",'" & sDetectionModeParameters(1) & "','" & sDetectionModeParameters(2) & "','" & sDetectionModeParameters(3) & "','" & sDetectionModeParameters(4) & "','" & sDetectionModeParameters(5) & "','" & sDetectionModeParameters(6) & "','" & sDetectionModeParameters(7) & "','" & sDetectionModeParameters(8) & "','" & sDetectionModeParameters(9) & "','" & sDetectionModeParameters(10) & "','" & sDetectionModeParameters(11) & "','" & sDetectionModeParameters(12) & "','" & sDetectionModeParameters(13) & "','" & sDetectionModeParameters(14) & "','" & sDetectionModeParameters(15) & "','" & sDetectionModeParameters(16) & "','" & sDetectionModeParameters(17) & "','" & sDetectionModeParameters(18) & "','" & sDetectionModeParameters(19) & "','" & sDetectionModeParameters(20) & "','" & sDetectionModeParameters(21) & "','" & sDetectionModeParameters(22) & "','" & sDetectionModeParameters(23) & "','" & sDetectionModeParameters(24) & "')"
-					
-					
-					oFPConnection.Execute(SQLQuery)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-					sDetectionModeParameters(1) = oTextLine.Item(2)
-					'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				ElseIf oTextLine.Item(1) = "Well list:" Then 
-					
-					'saving the setting in the database
-					
-					SQLQuery = "INSERT INTO detection_mode( run_id, detection_mode, light_sensor, excitation_side, emission_side, lamp, readings_per_well, time_between_readings, integration_time, attenuator_mode, motion_settling_time, z_height, excitation_filter, emission_filter, beamsplitter, excitation_polarizer_filter, emission_polarizer_filter, detector_counting, flash_lamp_voltage, delay_after_flash, sensitivity_setting, ad_converter_gain, integrating_gain, max_cps, min_counts) VALUES(" & lRunId & ",'" & sDetectionModeParameters(1) & "','" & sDetectionModeParameters(2) & "','" & sDetectionModeParameters(3) & "','" & sDetectionModeParameters(4) & "','" & sDetectionModeParameters(5) & "','" & sDetectionModeParameters(6) & "','" & sDetectionModeParameters(7) & "','" & sDetectionModeParameters(8) & "','" & sDetectionModeParameters(9) & "','" & sDetectionModeParameters(10) & "','" & sDetectionModeParameters(11) & "','" & sDetectionModeParameters(12) & "','" & sDetectionModeParameters(13) & "','" & sDetectionModeParameters(14) & "','" & sDetectionModeParameters(15) & "','" & sDetectionModeParameters(16) & "','" & sDetectionModeParameters(17) & "','" & sDetectionModeParameters(18) & "','" & sDetectionModeParameters(19) & "','" & sDetectionModeParameters(20) & "','" & sDetectionModeParameters(21) & "','" & sDetectionModeParameters(22) & "','" & sDetectionModeParameters(23) & "','" & sDetectionModeParameters(24) & "')"
-					
-					
-					oFPConnection.Execute(SQLQuery)
-					
-					Exit Do
-					
-					
-				End If
-				
-			Loop 
-			
-			
-			' updating parameters for the parallel raw data
-			'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			oFPConnection.Execute("UPDATE run SET raw_data_parallel_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-			sTextLine = oTextStream.ReadLine
-			oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-			'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			oFPConnection.Execute("UPDATE run SET raw_data_parallel_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-			oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-			'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			oFPConnection.Execute("UPDATE run SET raw_data_parallel_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-			'
-			sTextLine = oTextStream.ReadLine()
-			oTextLine = StringTokenizer(sTextLine, Chr(9))
-			
-			' reading the line which contains the column numbers for the plates
-			' if the collection after the line has been tokenized is 25 items
-			' it must be a 384 plate, if it is 13 items it is an 96 plate
-			
-			If oTextLine.Count() = 25 Then
-				' setting up for 386 format
-				' changing the size of the matrices
-				'UPGRADE_WARNING: Lower bound of array iParallel was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
+                ElseIf oTextLine.Item(1) = "Emission filter:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(13) = oTextLine.Item(2) & " " & oTextLine.Item(3)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Beamsplitter:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(3). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(14) = oTextLine.Item(2) & " " & oTextLine.Item(3)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Excitation polarizer filter:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(15) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Emission polarizer filter:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(16) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Detector counting:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(17) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Flash lamp voltage:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(18) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Delay after flash:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(19) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Sensitivity setting:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(20) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "A/D converter gain:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(21) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Integrating gain:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(22) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Max cps:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(23) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Min counts:" Then
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(24) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Detection mode:" Then
+                    'saving the setting in the database
+
+                    SQLQuery = "INSERT INTO detection_mode( run_id, detection_mode, light_sensor, excitation_side, emission_side, lamp, readings_per_well, time_between_readings, integration_time, attenuator_mode, motion_settling_time, z_height, excitation_filter, emission_filter, beamsplitter, excitation_polarizer_filter, emission_polarizer_filter, detector_counting, flash_lamp_voltage, delay_after_flash, sensitivity_setting, ad_converter_gain, integrating_gain, max_cps, min_counts) VALUES(" & lRunId & ",'" & sDetectionModeParameters(1) & "','" & sDetectionModeParameters(2) & "','" & sDetectionModeParameters(3) & "','" & sDetectionModeParameters(4) & "','" & sDetectionModeParameters(5) & "','" & sDetectionModeParameters(6) & "','" & sDetectionModeParameters(7) & "','" & sDetectionModeParameters(8) & "','" & sDetectionModeParameters(9) & "','" & sDetectionModeParameters(10) & "','" & sDetectionModeParameters(11) & "','" & sDetectionModeParameters(12) & "','" & sDetectionModeParameters(13) & "','" & sDetectionModeParameters(14) & "','" & sDetectionModeParameters(15) & "','" & sDetectionModeParameters(16) & "','" & sDetectionModeParameters(17) & "','" & sDetectionModeParameters(18) & "','" & sDetectionModeParameters(19) & "','" & sDetectionModeParameters(20) & "','" & sDetectionModeParameters(21) & "','" & sDetectionModeParameters(22) & "','" & sDetectionModeParameters(23) & "','" & sDetectionModeParameters(24) & "')"
+
+
+                    oFPConnection.Execute(SQLQuery)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    sDetectionModeParameters(1) = oTextLine.Item(2)
+                    'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                ElseIf oTextLine.Item(1) = "Well list:" Then
+
+                    'saving the setting in the database
+
+                    SQLQuery = "INSERT INTO detection_mode( run_id, detection_mode, light_sensor, excitation_side, emission_side, lamp, readings_per_well, time_between_readings, integration_time, attenuator_mode, motion_settling_time, z_height, excitation_filter, emission_filter, beamsplitter, excitation_polarizer_filter, emission_polarizer_filter, detector_counting, flash_lamp_voltage, delay_after_flash, sensitivity_setting, ad_converter_gain, integrating_gain, max_cps, min_counts) VALUES(" & lRunId & ",'" & sDetectionModeParameters(1) & "','" & sDetectionModeParameters(2) & "','" & sDetectionModeParameters(3) & "','" & sDetectionModeParameters(4) & "','" & sDetectionModeParameters(5) & "','" & sDetectionModeParameters(6) & "','" & sDetectionModeParameters(7) & "','" & sDetectionModeParameters(8) & "','" & sDetectionModeParameters(9) & "','" & sDetectionModeParameters(10) & "','" & sDetectionModeParameters(11) & "','" & sDetectionModeParameters(12) & "','" & sDetectionModeParameters(13) & "','" & sDetectionModeParameters(14) & "','" & sDetectionModeParameters(15) & "','" & sDetectionModeParameters(16) & "','" & sDetectionModeParameters(17) & "','" & sDetectionModeParameters(18) & "','" & sDetectionModeParameters(19) & "','" & sDetectionModeParameters(20) & "','" & sDetectionModeParameters(21) & "','" & sDetectionModeParameters(22) & "','" & sDetectionModeParameters(23) & "','" & sDetectionModeParameters(24) & "')"
+
+
+                    oFPConnection.Execute(SQLQuery)
+
+                    Exit Do
+
+
+                End If
+
+            Loop
+
+
+            ' updating parameters for the parallel raw data
+            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            oFPConnection.Execute("UPDATE run SET raw_data_parallel_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+            sTextLine = oTextStream.ReadLine
+            oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            oFPConnection.Execute("UPDATE run SET raw_data_parallel_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+            oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            oFPConnection.Execute("UPDATE run SET raw_data_parallel_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+            '
+            sTextLine = oTextStream.ReadLine()
+            oTextLine = StringTokenizer(sTextLine, Chr(9))
+
+            ' reading the line which contains the column numbers for the plates
+            ' if the collection after the line has been tokenized is 25 items
+            ' it must be a 384 plate, if it is 13 items it is an 96 plate
+
+            If oTextLine.Count() = 25 Then
+                ' setting up for 386 format
+                ' changing the size of the matrices
+                'UPGRADE_WARNING: Lower bound of array iParallel was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
                 ReDim iParallel(24, 16)
-				'UPGRADE_WARNING: Lower bound of array iPerpendicular was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
-				ReDim iPerpendicular(24, 16)
-				'UPGRADE_WARNING: Lower bound of array iRatio was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
-				ReDim iRatio(24, 16)
-				
-				' checking if the samples have already been created
-				' ie checking if there are any realtaions in the
-				' collection
-				If PlateWellId.Count = 0 Then
-					' if there aren't any relations
-					' creating wells in the database that corresponds to a 384 plate
-					For iWellRow = 0 To 15
-						For iWellColumn = 1 To 24
-							
-							' asiking the database for the id number for the well
-							' that has just been uploaded
-							Rs.Open("SELECT id FROM plate_map WHERE well_row ='" & Chr(65 + iWellRow) & "' AND well_column = " & iWellColumn & " AND plate_id = " & lPlateId)
-							
-							If Not Rs.EOF Then 'Check if the well exists.
-								PlateWellId.Add(Chr(65 + iWellRow) & iWellColumn, Val(Rs.Fields(0).Value))
-							End If
-							Rs.Close()
-							
-						Next iWellColumn
-					Next iWellRow
-				End If
-				
-				' saving the data from the file into matrices
-				
+                'UPGRADE_WARNING: Lower bound of array iPerpendicular was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
+                ReDim iPerpendicular(24, 16)
+                'UPGRADE_WARNING: Lower bound of array iRatio was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
+                ReDim iRatio(24, 16)
+
+                ' checking if the samples have already been created
+                ' ie checking if there are any realtaions in the
+                ' collection
+                If PlateWellId.Count = 0 Then
+                    ' if there aren't any relations
+                    ' creating wells in the database that corresponds to a 384 plate
+                    For iWellRow = 0 To 15
+                        For iWellColumn = 1 To 24
+
+                            ' asiking the database for the id number for the well
+                            ' that has just been uploaded
+                            Rs.Open("SELECT id FROM plate_map WHERE well_row ='" & Chr(65 + iWellRow) & "' AND well_column = " & iWellColumn & " AND plate_id = " & lPlateId)
+
+                            If Not Rs.EOF Then 'Check if the well exists.
+                                PlateWellId.Add(Chr(65 + iWellRow) & iWellColumn, Val(Rs.Fields(0).Value))
+                            End If
+                            Rs.Close()
+
+                        Next iWellColumn
+                    Next iWellRow
+                End If
+
+                ' saving the data from the file into matrices
+
                 For iWellRow = 1 To 16
                     oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
                     For iWellColumn = 1 To 24
@@ -889,332 +884,332 @@ setGenotype_Error:
                         End If
                     Next iWellColumn
                 Next iWellRow
-				
-				'reading data for the perpendicular raw data
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				sTextLine = oTextStream.ReadLine
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				
-				sTextLine = oTextStream.ReadLine
-				
-				
-				'filling the next matrix
-				For iWellRow = 1 To 16
-					oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
-					For iWellColumn = 1 To 24
-						'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-						If Not oTextLine.Item(iWellColumn + 1) = "" Then
-							'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-							iPerpendicular(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
-						End If
-					Next iWellColumn
-				Next iWellRow
-				
-				
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET ratio_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				sTextLine = oTextStream.ReadLine
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET ratio_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET ratio_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				
-				sTextLine = oTextStream.ReadLine
-				
-				
-				
-				
-				'filling the next matrix
-				For iWellRow = 1 To 16
-					oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
-					For iWellColumn = 1 To 24
-						'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-						If Not oTextLine.Item(iWellColumn + 1) = "" Then
-							'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-							iRatio(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
-						End If
-					Next iWellColumn
-				Next iWellRow
-				
-				' it is time to update to the database
-				' using prepared statements as usual
-				
-				
-				For iWellRow = 1 To 16
-					For iWellColumn = 1 To 24
-						' update to the database where samplename and plate id
-						If (Not iParallel(iWellColumn, iWellRow) = "") And (Not iPerpendicular(iWellColumn, iWellRow) = "") And (Not iRatio(iWellColumn, iWellRow) = "") Then
-							' checking to see that all the different matrices contains data
-							' Make sure the well exists.
-							If PlateWellId.Exists(Chr(65 + iWellRow - 1) & iWellColumn) Then
-								cmdData.Parameters("raw_data_parallel").Value = iParallel(iWellColumn, iWellRow)
-								cmdData.Parameters("raw_data_perpendicular").Value = iPerpendicular(iWellColumn, iWellRow)
-								cmdData.Parameters("raw_data_ratio").Value = iRatio(iWellColumn, iWellRow)
-								cmdData.Parameters("run_id").Value = lRunId
-								'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-								cmdData.Parameters("plate_map_id").Value = PlateWellId.item(Chr(65 + iWellRow - 1) & iWellColumn)
-								cmdData.Execute()
-								' if we wrote data we need to assign this data to the correct
-								' segment
-								cmdSegment.Parameters("segment_id").Value = lSegmentId
-								'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-								cmdSegment.Parameters("plate_map_id").Value = PlateWellId.item(Chr(65 + iWellRow - 1) & iWellColumn)
-								cmdSegment.Execute()
-							End If
-						End If
-					Next iWellColumn
-				Next iWellRow
-				
-				
-			ElseIf oTextLine.Count() = 13 Then 
-				' setting up for 386 format
-				' changing the size of the matrices
-				'UPGRADE_WARNING: Lower bound of array iParallel was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
-				ReDim iParallel(12, 8)
-				'UPGRADE_WARNING: Lower bound of array iPerpendicular was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
-				ReDim iPerpendicular(12, 8)
-				'UPGRADE_WARNING: Lower bound of array iRatio was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
-				ReDim iRatio(12, 8)
-				
-				' checking if the samples have already been created
-				' ie checking if there are any realtaions in the
-				' collection
-				If PlateWellId.Count = 0 Then
-					' if there aren't any relations
-					' creating wells in the database that corresponds to a 384 plate
-					For iWellRow = 0 To 7
-						For iWellColumn = 1 To 12
-							
-							' asiking the database for the id number for the well
-							' that has just been uploaded
-							Rs.Open("SELECT id FROM plate_map WHERE well_row ='" & Chr(65 + iWellRow) & "' AND well_column = " & iWellColumn & " AND plate_id = " & lPlateId)
-							
-							PlateWellId.Add(Chr(65 + iWellRow) & iWellColumn, Val(Rs.Fields(0).Value))
-							Rs.Close()
-							
-							'MsgBox Chr(65 + iWellRow) & iWellColumn
-						Next iWellColumn
-					Next iWellRow
-				End If
-				
-				' saving the data from the file into matrices
-				
-				For iWellRow = 1 To 8
-					oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
-					For iWellColumn = 1 To 12
-						' because that the matrix starts at position 2 in the
-						' tab dilimited file we need to save at position -1
-						' in the matrix
-						
-						'checking to see if the current position contains any data
-						'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-						If Not oTextLine.Item(iWellColumn + 1) = "" Then
-							' if it had data we save it
-							'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-							iParallel(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
-						End If
-					Next iWellColumn
-				Next iWellRow
-				
-				'reading data for the perpendicular raw data
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				sTextLine = oTextStream.ReadLine
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				
-				sTextLine = oTextStream.ReadLine
-				
-				
-				'filling the next matrix
-				For iWellRow = 1 To 8
-					oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
-					For iWellColumn = 1 To 12
-						'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-						If Not oTextLine.Item(iWellColumn + 1) = "" Then
-							'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-							iPerpendicular(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
-						End If
-					Next iWellColumn
-				Next iWellRow
-				
-				
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET ratio_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				sTextLine = oTextStream.ReadLine
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET ratio_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
-				'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				oFPConnection.Execute("UPDATE run SET ratio_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
-				
-				sTextLine = oTextStream.ReadLine
-				
-				
-				
-				
-				'filling the next matrix
-				For iWellRow = 1 To 8
-					oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
-					For iWellColumn = 1 To 12
-						'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-						If Not oTextLine.Item(iWellColumn + 1) = "" Then
-							'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-							iRatio(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
-						End If
-					Next iWellColumn
-				Next iWellRow
-				
-				' it is time to update to the database
-				' using prepared statements as usual
-				
-				
-				For iWellRow = 1 To 8
-					For iWellColumn = 1 To 12
-						' update to the database where samplename and plate id
-						If (Not iParallel(iWellColumn, iWellRow) = "") And (Not iPerpendicular(iWellColumn, iWellRow) = "") And (Not iRatio(iWellColumn, iWellRow) = "") Then
-							' checking to see that all the different matrices contains data
-							' Check if the well exists.
-							If PlateWellId.Exists(Chr(65 + iWellRow - 1) & iWellColumn) Then
-								cmdData.Parameters("raw_data_parallel").Value = iParallel(iWellColumn, iWellRow)
-								cmdData.Parameters("raw_data_perpendicular").Value = iPerpendicular(iWellColumn, iWellRow)
-								cmdData.Parameters("raw_data_ratio").Value = iRatio(iWellColumn, iWellRow)
-								cmdData.Parameters("run_id").Value = lRunId
-								'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-								cmdData.Parameters("plate_map_id").Value = PlateWellId.item(Chr(65 + iWellRow - 1) & iWellColumn)
-								cmdData.Execute()
-								' if we wrote data we need to assign this data to the correct
-								' segment
-								cmdSegment.Parameters("segment_id").Value = lSegmentId
-								'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-								cmdSegment.Parameters("plate_map_id").Value = PlateWellId.item(Chr(65 + iWellRow - 1) & iWellColumn)
-								cmdSegment.Execute()
-							End If
-						End If
-					Next iWellColumn
-				Next iWellRow
-				
-				
-				
-			Else
-				MsgBox("unrecognized array format")
-				RawDataFileParser = 0
-				Exit Function
-			End If
-			
-			
-			
-			
-			
-			If oTextStream.AtEndOfStream Then
-				bBreak = True
-			End If
-			
-			
-		Loop 
-		
-		
-		
-		RawDataFileParser = lSegmentId
-		' closing the file
-		oTextStream.Close()
-		
-		
-		
-		' cleaning up
-		'UPGRADE_NOTE: Object Rs may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		Rs = Nothing
-		'UPGRADE_NOTE: Object PlateWellId may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		PlateWellId = Nothing
-		'UPGRADE_NOTE: Object oTextStream may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		oTextStream = Nothing
-		'UPGRADE_NOTE: Object oTextLine may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		oTextLine = Nothing
-		'UPGRADE_NOTE: Object oFileSysObj may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		oFileSysObj = Nothing
-		
-		
-		Exit Function
-		
-RawDataFileParser_Error: 
-		MsgBox(Err.Description)
-		oTextStream.Close()
-		'UPGRADE_NOTE: Object Rs may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		Rs = Nothing
-		'UPGRADE_NOTE: Object PlateWellId may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		PlateWellId = Nothing
-		'UPGRADE_NOTE: Object oTextStream may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		oTextStream = Nothing
-		'UPGRADE_NOTE: Object oTextLine may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		oTextLine = Nothing
-		'UPGRADE_NOTE: Object oFileSysObj may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		oFileSysObj = Nothing
-		
-		' need to remove all the tables that we just added
-		' first remove the run table
-		oFPConnection.Execute("DELETE FROM run WHERE id IN ( SELECT run_id FROM data WHERE plate_map_id IN ( SELECT id FROM plate_map WHERE segment_id = " & lSegmentId & "))")
-		' then we remove the segment
-		oFPConnection.Execute("DELETE FROM segment WHERE id = " & lSegmentId)
-		
-		
-		
-		Exit Function
-	End Function
-	
-	Private Function StringTokenizer(ByRef sInputString As String, ByRef sDelimit As String) As Collection
-		Dim temp As New Collection
-		Dim iPosition As Short
-		Dim bEnd As Boolean
+
+                'reading data for the perpendicular raw data
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                sTextLine = oTextStream.ReadLine
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+
+                sTextLine = oTextStream.ReadLine
+
+
+                'filling the next matrix
+                For iWellRow = 1 To 16
+                    oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
+                    For iWellColumn = 1 To 24
+                        'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                        If Not oTextLine.Item(iWellColumn + 1) = "" Then
+                            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                            iPerpendicular(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
+                        End If
+                    Next iWellColumn
+                Next iWellRow
+
+
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET ratio_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                sTextLine = oTextStream.ReadLine
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET ratio_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET ratio_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+
+                sTextLine = oTextStream.ReadLine
+
+
+
+
+                'filling the next matrix
+                For iWellRow = 1 To 16
+                    oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
+                    For iWellColumn = 1 To 24
+                        'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                        If Not oTextLine.Item(iWellColumn + 1) = "" Then
+                            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                            iRatio(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
+                        End If
+                    Next iWellColumn
+                Next iWellRow
+
+                ' it is time to update to the database
+                ' using prepared statements as usual
+
+
+                For iWellRow = 1 To 16
+                    For iWellColumn = 1 To 24
+                        ' update to the database where samplename and plate id
+                        If (Not iParallel(iWellColumn, iWellRow) = "") And (Not iPerpendicular(iWellColumn, iWellRow) = "") And (Not iRatio(iWellColumn, iWellRow) = "") Then
+                            ' checking to see that all the different matrices contains data
+                            ' Make sure the well exists.
+                            If PlateWellId.Exists(Chr(65 + iWellRow - 1) & iWellColumn) Then
+                                cmdData.Parameters("raw_data_parallel").Value = iParallel(iWellColumn, iWellRow)
+                                cmdData.Parameters("raw_data_perpendicular").Value = iPerpendicular(iWellColumn, iWellRow)
+                                cmdData.Parameters("raw_data_ratio").Value = iRatio(iWellColumn, iWellRow)
+                                cmdData.Parameters("run_id").Value = lRunId
+                                'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                                cmdData.Parameters("plate_map_id").Value = PlateWellId.Item(Chr(65 + iWellRow - 1) & iWellColumn)
+                                cmdData.Execute()
+                                ' if we wrote data we need to assign this data to the correct
+                                ' segment
+                                cmdSegment.Parameters("segment_id").Value = lSegmentId
+                                'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                                cmdSegment.Parameters("plate_map_id").Value = PlateWellId.Item(Chr(65 + iWellRow - 1) & iWellColumn)
+                                cmdSegment.Execute()
+                            End If
+                        End If
+                    Next iWellColumn
+                Next iWellRow
+
+
+            ElseIf oTextLine.Count() = 13 Then
+                ' setting up for 386 format
+                ' changing the size of the matrices
+                'UPGRADE_WARNING: Lower bound of array iParallel was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
+                ReDim iParallel(12, 8)
+                'UPGRADE_WARNING: Lower bound of array iPerpendicular was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
+                ReDim iPerpendicular(12, 8)
+                'UPGRADE_WARNING: Lower bound of array iRatio was changed from 1,1 to 0,0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
+                ReDim iRatio(12, 8)
+
+                ' checking if the samples have already been created
+                ' ie checking if there are any realtaions in the
+                ' collection
+                If PlateWellId.Count = 0 Then
+                    ' if there aren't any relations
+                    ' creating wells in the database that corresponds to a 384 plate
+                    For iWellRow = 0 To 7
+                        For iWellColumn = 1 To 12
+
+                            ' asiking the database for the id number for the well
+                            ' that has just been uploaded
+                            Rs.Open("SELECT id FROM plate_map WHERE well_row ='" & Chr(65 + iWellRow) & "' AND well_column = " & iWellColumn & " AND plate_id = " & lPlateId)
+
+                            PlateWellId.Add(Chr(65 + iWellRow) & iWellColumn, Val(Rs.Fields(0).Value))
+                            Rs.Close()
+
+                            'MsgBox Chr(65 + iWellRow) & iWellColumn
+                        Next iWellColumn
+                    Next iWellRow
+                End If
+
+                ' saving the data from the file into matrices
+
+                For iWellRow = 1 To 8
+                    oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
+                    For iWellColumn = 1 To 12
+                        ' because that the matrix starts at position 2 in the
+                        ' tab dilimited file we need to save at position -1
+                        ' in the matrix
+
+                        'checking to see if the current position contains any data
+                        'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                        If Not oTextLine.Item(iWellColumn + 1) = "" Then
+                            ' if it had data we save it
+                            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                            iParallel(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
+                        End If
+                    Next iWellColumn
+                Next iWellRow
+
+                'reading data for the perpendicular raw data
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                sTextLine = oTextStream.ReadLine
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET raw_data_perpendicular_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+
+                sTextLine = oTextStream.ReadLine
+
+
+                'filling the next matrix
+                For iWellRow = 1 To 8
+                    oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
+                    For iWellColumn = 1 To 12
+                        'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                        If Not oTextLine.Item(iWellColumn + 1) = "" Then
+                            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                            iPerpendicular(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
+                        End If
+                    Next iWellColumn
+                Next iWellRow
+
+
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET ratio_well_list = '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                sTextLine = oTextStream.ReadLine
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET ratio_units= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+                oTextLine = StringTokenizer(oTextStream.ReadLine, Chr(9))
+                'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                oFPConnection.Execute("UPDATE run SET ratio_display_format= '" & oTextLine.Item(2) & "' WHERE id = " & lRunId)
+
+                sTextLine = oTextStream.ReadLine
+
+
+
+
+                'filling the next matrix
+                For iWellRow = 1 To 8
+                    oTextLine = StringTokenizer(oTextStream.ReadLine(), Chr(9))
+                    For iWellColumn = 1 To 12
+                        'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(iWellColumn + 1). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                        If Not oTextLine.Item(iWellColumn + 1) = "" Then
+                            'UPGRADE_WARNING: Couldn't resolve default property of object oTextLine.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                            iRatio(iWellColumn, iWellRow) = CStr(Val(oTextLine.Item(iWellColumn + 1)))
+                        End If
+                    Next iWellColumn
+                Next iWellRow
+
+                ' it is time to update to the database
+                ' using prepared statements as usual
+
+
+                For iWellRow = 1 To 8
+                    For iWellColumn = 1 To 12
+                        ' update to the database where samplename and plate id
+                        If (Not iParallel(iWellColumn, iWellRow) = "") And (Not iPerpendicular(iWellColumn, iWellRow) = "") And (Not iRatio(iWellColumn, iWellRow) = "") Then
+                            ' checking to see that all the different matrices contains data
+                            ' Check if the well exists.
+                            If PlateWellId.Exists(Chr(65 + iWellRow - 1) & iWellColumn) Then
+                                cmdData.Parameters("raw_data_parallel").Value = iParallel(iWellColumn, iWellRow)
+                                cmdData.Parameters("raw_data_perpendicular").Value = iPerpendicular(iWellColumn, iWellRow)
+                                cmdData.Parameters("raw_data_ratio").Value = iRatio(iWellColumn, iWellRow)
+                                cmdData.Parameters("run_id").Value = lRunId
+                                'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                                cmdData.Parameters("plate_map_id").Value = PlateWellId.Item(Chr(65 + iWellRow - 1) & iWellColumn)
+                                cmdData.Execute()
+                                ' if we wrote data we need to assign this data to the correct
+                                ' segment
+                                cmdSegment.Parameters("segment_id").Value = lSegmentId
+                                'UPGRADE_WARNING: Couldn't resolve default property of object PlateWellId.item(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                                cmdSegment.Parameters("plate_map_id").Value = PlateWellId.Item(Chr(65 + iWellRow - 1) & iWellColumn)
+                                cmdSegment.Execute()
+                            End If
+                        End If
+                    Next iWellColumn
+                Next iWellRow
+
+
+
+            Else
+                MsgBox("unrecognized array format")
+                RawDataFileParser = 0
+                Exit Function
+            End If
+
+
+
+
+
+            If oTextStream.AtEndOfStream Then
+                bBreak = True
+            End If
+
+
+        Loop
+
+
+
+        RawDataFileParser = lSegmentId
+        ' closing the file
+        oTextStream.Close()
+
+
+
+        ' cleaning up
+        'UPGRADE_NOTE: Object Rs may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        Rs = Nothing
+        'UPGRADE_NOTE: Object PlateWellId may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        PlateWellId = Nothing
+        'UPGRADE_NOTE: Object oTextStream may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        oTextStream = Nothing
+        'UPGRADE_NOTE: Object oTextLine may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        oTextLine = Nothing
+        'UPGRADE_NOTE: Object oFileSysObj may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        oFileSysObj = Nothing
+
+
+        Exit Function
+
+RawDataFileParser_Error:
+        MsgBox(Err.Description)
+        oTextStream.Close()
+        'UPGRADE_NOTE: Object Rs may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        Rs = Nothing
+        'UPGRADE_NOTE: Object PlateWellId may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        PlateWellId = Nothing
+        'UPGRADE_NOTE: Object oTextStream may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        oTextStream = Nothing
+        'UPGRADE_NOTE: Object oTextLine may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        oTextLine = Nothing
+        'UPGRADE_NOTE: Object oFileSysObj may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
+        oFileSysObj = Nothing
+
+        ' need to remove all the tables that we just added
+        ' first remove the run table
+        oFPConnection.Execute("DELETE FROM run WHERE id IN ( SELECT run_id FROM data WHERE plate_map_id IN ( SELECT id FROM plate_map WHERE segment_id = " & lSegmentId & "))")
+        ' then we remove the segment
+        oFPConnection.Execute("DELETE FROM segment WHERE id = " & lSegmentId)
+
+
+
+        Exit Function
+    End Function
+
+    Private Function StringTokenizer(ByRef sInputString As String, ByRef sDelimit As String) As Collection
+        Dim temp As New Collection
+        Dim iPosition As Short
+        Dim bEnd As Boolean
         bEnd = False
         StringTokenizer = Nothing
-		Do While Not bEnd
-			iPosition = InStr(1, sInputString, sDelimit)
-			If iPosition = 0 Then
-				temp.Add(sInputString)
-				bEnd = True
-			Else
-				temp.Add(Mid(sInputString, 1, iPosition - 1))
-				sInputString = Mid(sInputString, iPosition + 1, Len(sInputString))
-			End If
-			
-			StringTokenizer = temp
-			
-		Loop 
-	End Function
-	
-	Public Sub UnloadAllForms()
-		On Error Resume Next
-		FPresultDB.Close()
-		frmAddDate.Close()
-		frmLoadOrderName.Close()
-		frmPlateAdd.Close()
-		frmPlateScheme.Close()
-		frmPlateSchemeLoadOrder.Close()
-		frmReadSampleName.Close()
-		frmSelectMasterPlate.Close()
-		frmSelectPlateSchemeName.Close()
-		frmSelectSampleFile.Close()
-		frmUserName.Close()
-	End Sub
-	
-	'UPGRADE_ISSUE: VB.App object was not upgraded. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6B85A2A7-FE9F-4FBE-AA0C-CF11AC86A305"'
+        Do While Not bEnd
+            iPosition = InStr(1, sInputString, sDelimit)
+            If iPosition = 0 Then
+                temp.Add(sInputString)
+                bEnd = True
+            Else
+                temp.Add(Mid(sInputString, 1, iPosition - 1))
+                sInputString = Mid(sInputString, iPosition + 1, Len(sInputString))
+            End If
+
+            StringTokenizer = temp
+
+        Loop
+    End Function
+
+    Public Sub UnloadAllForms()
+        On Error Resume Next
+        FPresultDB.Close()
+        frmAddDate.Close()
+        frmLoadOrderName.Close()
+        frmPlateAdd.Close()
+        frmPlateScheme.Close()
+        frmPlateSchemeLoadOrder.Close()
+        frmReadSampleName.Close()
+        frmSelectMasterPlate.Close()
+        frmSelectPlateSchemeName.Close()
+        frmSelectSampleFile.Close()
+        frmUserName.Close()
+    End Sub
+
+    'UPGRADE_ISSUE: VB.App object was not upgraded. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6B85A2A7-FE9F-4FBE-AA0C-CF11AC86A305"'
     Public Function isCorrectVersion(ByRef gtdbConnection As ADODB.Connection) As Boolean
         'Checks if the current application is allowed to connect to the database.
 
@@ -1247,130 +1242,130 @@ isCorrectVersion_Error:
         isCorrectVersion = False
 
     End Function
-	
-	
-	
-	Private Function GetRegValue(ByVal hKey As Integer, ByVal sSectKey As String, ByVal sSubKey As String, ByRef sValue As String) As Boolean
-		Dim lResult As Integer
-		Dim phkResult As Integer
-		Dim dWReserved As Integer
-		Dim bFound As Short
-		Dim szBuffer As String
-		Dim lBuffSize As Integer
-		Dim szBuffer2 As String
-		Dim lBuffSize2 As Integer
-		Dim lIndex As Integer
-		Dim lType As Integer
-		Dim sCompKey As String
-		lIndex = 0
-		lResult = RegOpenKeyEx(hKey, sSectKey, 0, 1, phkResult)
-		
-		
-		Do While lResult = ERROR_SUCCESS And Not bFound
-			szBuffer = Space(255)
-			lBuffSize = Len(szBuffer)
-			szBuffer2 = Space(255)
-			lBuffSize2 = Len(szBuffer2)
-			'Get next value.
-			lResult = RegEnumValue(phkResult, lIndex, szBuffer, lBuffSize, dWReserved, lType, szBuffer2, lBuffSize2)
-			
-			If lResult = ERROR_SUCCESS Then
-				sCompKey = Left(szBuffer, lBuffSize)
-				If sCompKey = sSubKey Then
-					sValue = Left(szBuffer2, lBuffSize2 - 1)
-					bFound = True
-				End If
-			End If
-			lIndex = lIndex + 1
-		Loop 
-		Call RegCloseKey(phkResult)
-		GetRegValue = bFound
-	End Function
-	
-	
-	Public Function getPath(ByRef sFullFileName As String) As String
-		Dim iLastSlashPos As Integer
-		On Error GoTo errHandler
-		
-		
-		iLastSlashPos = InStrRev(sFullFileName, "\")
-		
-		If iLastSlashPos <> 0 Then
-			getPath = Left(sFullFileName, iLastSlashPos)
-		Else
-			getPath = ""
-		End If
-		Exit Function
-errHandler: 
-		getPath = ""
-	End Function
-	
-	Public Function getPathVariable(ByRef sKey As String) As String
-		Dim sValue As String
+
+
+
+    Private Function GetRegValue(ByVal hKey As Integer, ByVal sSectKey As String, ByVal sSubKey As String, ByRef sValue As String) As Boolean
+        Dim lResult As Integer
+        Dim phkResult As Integer
+        Dim dWReserved As Integer
+        Dim bFound As Short
+        Dim szBuffer As String
+        Dim lBuffSize As Integer
+        Dim szBuffer2 As String
+        Dim lBuffSize2 As Integer
+        Dim lIndex As Integer
+        Dim lType As Integer
+        Dim sCompKey As String
+        lIndex = 0
+        lResult = RegOpenKeyEx(hKey, sSectKey, 0, 1, phkResult)
+
+
+        Do While lResult = ERROR_SUCCESS And Not bFound
+            szBuffer = Space(255)
+            lBuffSize = Len(szBuffer)
+            szBuffer2 = Space(255)
+            lBuffSize2 = Len(szBuffer2)
+            'Get next value.
+            lResult = RegEnumValue(phkResult, lIndex, szBuffer, lBuffSize, dWReserved, lType, szBuffer2, lBuffSize2)
+
+            If lResult = ERROR_SUCCESS Then
+                sCompKey = Left(szBuffer, lBuffSize)
+                If sCompKey = sSubKey Then
+                    sValue = Left(szBuffer2, lBuffSize2 - 1)
+                    bFound = True
+                End If
+            End If
+            lIndex = lIndex + 1
+        Loop
+        Call RegCloseKey(phkResult)
+        GetRegValue = bFound
+    End Function
+
+
+    Public Function getPath(ByRef sFullFileName As String) As String
+        Dim iLastSlashPos As Integer
+        On Error GoTo errHandler
+
+
+        iLastSlashPos = InStrRev(sFullFileName, "\")
+
+        If iLastSlashPos <> 0 Then
+            getPath = Left(sFullFileName, iLastSlashPos)
+        Else
+            getPath = ""
+        End If
+        Exit Function
+errHandler:
+        getPath = ""
+    End Function
+
+    Public Function getPathVariable(ByRef sKey As String) As String
+        Dim sValue As String
         sValue = ""
         getPathVariable = ""
-		If GetRegValue(CInt(chiRegClassKey), chiRegSubSectionPathKey, sKey, sValue) Then
-			getPathVariable = sValue
-		End If
-		
-	End Function
-	
-	
-	Public Sub SetPathVariable(ByRef Key As String, ByRef sPathVariable As String)
-		Dim lResult As Integer
-		Dim phkResult As Integer
-		Dim lCreate As Integer
-		Dim SecrtAttr As SECURITY_ATTRIBUTES
-		
-		Call RegCreateKeyEx(CInt(chiRegClassKey), chiRegSubSectionPathKey, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, SecrtAttr, phkResult, lCreate)
-		lResult = RegSetValueEx(phkResult, Key, 0, REG_SZ, sPathVariable, CInt(Len(sPathVariable) + 1))
-		Call RegCloseKey(phkResult)
-		
-		If lResult <> ERROR_SUCCESS Then
-			MsgBox("Could not update path settings in the registry.")
-		End If
-	End Sub
-	
-	Public Function ReadConfigString(ByRef configItem As String) As String
-		Dim fso As New Scripting.FileSystemObject
-		Dim configFile As Scripting.File
-		Dim ts As Scripting.TextStream
-		Dim s, item As Object
-		Dim value As String
-		Dim sArray() As String
-		
-		On Error GoTo errHandler
-		
-		configFile = fso.GetFile(chiConfigFileName)
-		
-		' Read the contents of the file.
-		ts = configFile.OpenAsTextStream(Scripting.IOMode.ForReading)
-		
-		While (Not ts.AtEndOfStream)
-			'UPGRADE_WARNING: Couldn't resolve default property of object s. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			s = ts.ReadLine
-			'UPGRADE_WARNING: Couldn't resolve default property of object s. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			sArray = Split(s, vbTab)
-			If UBound(sArray, 1) > 0 Then
-				'UPGRADE_WARNING: Couldn't resolve default property of object item. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				item = Trim(sArray(0))
-				value = Trim(sArray(1))
-				'UPGRADE_WARNING: Couldn't resolve default property of object item. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-				If UCase(item) = UCase(configItem) Then
-					ReadConfigString = value
-					ts.Close()
-					Exit Function
-				End If
-			End If
-		End While
-		
-		'Pass through to errHandler if could not read any value:
-		
-errHandler: 
-		MsgBox("Could not read configuration value " & configItem & " from file " & chiConfigFileName)
-		
-		If Not ts Is Nothing Then
-			ts.Close()
-		End If
-	End Function
+        If GetRegValue(CInt(chiRegClassKey), chiRegSubSectionPathKey, sKey, sValue) Then
+            getPathVariable = sValue
+        End If
+
+    End Function
+
+
+    Public Sub SetPathVariable(ByRef Key As String, ByRef sPathVariable As String)
+        Dim lResult As Integer
+        Dim phkResult As Integer
+        Dim lCreate As Integer
+        Dim SecrtAttr As SECURITY_ATTRIBUTES
+
+        Call RegCreateKeyEx(CInt(chiRegClassKey), chiRegSubSectionPathKey, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, SecrtAttr, phkResult, lCreate)
+        lResult = RegSetValueEx(phkResult, Key, 0, REG_SZ, sPathVariable, CInt(Len(sPathVariable) + 1))
+        Call RegCloseKey(phkResult)
+
+        If lResult <> ERROR_SUCCESS Then
+            MsgBox("Could not update path settings in the registry.")
+        End If
+    End Sub
+
+    Public Function ReadConfigString(ByRef configItem As String) As String
+        Dim fso As New Scripting.FileSystemObject
+        Dim configFile As Scripting.File
+        Dim ts As Scripting.TextStream
+        Dim s, item As Object
+        Dim value As String
+        Dim sArray() As String
+
+        On Error GoTo errHandler
+
+        configFile = fso.GetFile(chiConfigFileName)
+
+        ' Read the contents of the file.
+        ts = configFile.OpenAsTextStream(Scripting.IOMode.ForReading)
+
+        While (Not ts.AtEndOfStream)
+            'UPGRADE_WARNING: Couldn't resolve default property of object s. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            s = ts.ReadLine
+            'UPGRADE_WARNING: Couldn't resolve default property of object s. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            sArray = Split(s, vbTab)
+            If UBound(sArray, 1) > 0 Then
+                'UPGRADE_WARNING: Couldn't resolve default property of object item. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                item = Trim(sArray(0))
+                value = Trim(sArray(1))
+                'UPGRADE_WARNING: Couldn't resolve default property of object item. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                If UCase(item) = UCase(configItem) Then
+                    ReadConfigString = value
+                    ts.Close()
+                    Exit Function
+                End If
+            End If
+        End While
+
+        'Pass through to errHandler if could not read any value:
+
+errHandler:
+        MsgBox("Could not read configuration value " & configItem & " from file " & chiConfigFileName)
+
+        If Not ts Is Nothing Then
+            ts.Close()
+        End If
+    End Function
 End Module
