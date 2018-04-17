@@ -11,7 +11,7 @@ Module NonFormModule
         Dim DEVELOPMENT_VERSION As Boolean
         Dim MyfrmStart As frmStart
 
-        DEVELOPMENT_VERSION = False
+        DEVELOPMENT_VERSION = True
         '-------------------------------------------------
 
         Dim oFPConnection As New ADODB.Connection

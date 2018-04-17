@@ -157,6 +157,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.vb" />
+    <Compile Include="Backgrounds.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Backgrounds.resx</DependentUpon>
+    </Compile>
     <Compile Include="CollectionHelp.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -276,6 +281,11 @@
     <Compile Include="WindowsAPI.vb">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Backgrounds.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Backgrounds.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="FPresultDB.resX">
       <DependentUpon>FPresultDB.vb</DependentUpon>
     </EmbeddedResource>
@@ -334,6 +344,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\DevelBackground.PNG" />
+    <Content Include="Resources\ValidationBackground.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
