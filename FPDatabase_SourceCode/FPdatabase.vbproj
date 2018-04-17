@@ -275,6 +275,11 @@
     <Compile Include="PlateCoordinate.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="UpgradeSupport.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -329,6 +334,10 @@
       <DependentUpon>frnSelectPlateSchemeName.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />

@@ -6,13 +6,6 @@ Module NonFormModule
 	Public Sub Main()
 		
 		On Error GoTo Main_Error
-		
-		'----- For development purpose -------------------
-        Dim DEVELOPMENT_VERSION As Boolean
-        Dim MyfrmStart As frmStart
-
-        DEVELOPMENT_VERSION = True
-        '-------------------------------------------------
 
         Dim oFPConnection As New ADODB.Connection
         Dim oGtdbConnection As New ADODB.Connection
@@ -27,8 +20,7 @@ Module NonFormModule
         oFPConnection.Open()
         oGtdbConnection.Open()
 
-        If Not DEVELOPMENT_VERSION Then
-            'UPGRADE_ISSUE: App object was not upgraded. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6B85A2A7-FE9F-4FBE-AA0C-CF11AC86A305"'
+        If Settings.Default.EnforceAppVersion Then
             If isCorrectVersion(oGtdbConnection) = False Then
                 MsgBox("Permission to database denied. You may be using an old version of this application.")
                 Exit Sub
