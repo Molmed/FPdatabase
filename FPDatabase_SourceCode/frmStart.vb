@@ -1,19 +1,73 @@
 Option Strict Off
 Option Explicit On
+
+Imports FPDatabase.My.Resources
+Imports FPDatabase.Properties
+Enum Environment
+    Operational
+    Validation
+    Development
+End Enum
 Friend Class frmStart
-	Inherits System.Windows.Forms.Form
-	Private oFPConnection As ADODB.Connection
-	Private oGtdbConnection As ADODB.Connection
-	Private bPracticeMode As Boolean
-	
-	Public Sub Initialize(ByRef oInFPConnection As ADODB.Connection, ByRef oInGtdbConnection As ADODB.Connection, ByVal bInPracticeMode As Object)
-		oFPConnection = oInFPConnection
-		oGtdbConnection = oInGtdbConnection
-		'UPGRADE_WARNING: Couldn't resolve default property of object bInPracticeMode. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		bPracticeMode = bInPracticeMode
-	End Sub
-	
-	Private Sub btnCreatePlateScheme_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles btnCreatePlateScheme.Click
+    Inherits System.Windows.Forms.Form
+    Private oFPConnection As ADODB.Connection
+    Private oGtdbConnection As ADODB.Connection
+    Private bPracticeMode As Boolean
+
+    Public Sub Initialize(ByRef oInFPConnection As ADODB.Connection, ByRef oInGtdbConnection As ADODB.Connection, ByVal bInPracticeMode As Object)
+        oFPConnection = oInFPConnection
+        oGtdbConnection = oInGtdbConnection
+        'UPGRADE_WARNING: Couldn't resolve default property of object bInPracticeMode. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+        bPracticeMode = bInPracticeMode
+        Dim env = ExtractEnvironment(oFPConnection.ConnectionString)
+        ShowEnvironment(env)
+    End Sub
+
+    Private Function ExtractEnvironment(connectionString As String) As Environment
+        Dim parts = connectionString.Split(";")
+        Dim initialCatalogPart As String
+        For Each part As String In parts
+            If part.Contains("Initial Catalog") Then
+                initialCatalogPart = part
+            End If
+        Next
+        If initialCatalogPart.Contains("devel") Then
+            Return Environment.Development
+        ElseIf initialCatalogPart.Contains("practice") Then
+            Return Environment.Validation
+        ElseIf initialCatalogPart.EndsWith("FP") Then
+            Return Environment.Operational
+        Else
+            Throw New Exception("The connection string could not be parsed for determining type of environment. Quitting")
+        End If
+    End Function
+
+    Private Sub ShowEnvironment(env As Environment)
+        Select Case env
+            Case Environment.Development
+                ShowDevelBackground()
+            Case Environment.Validation
+                ShowValidationBackground()
+            Case Environment.Operational
+                ShrinkBackground()
+        End Select
+    End Sub
+
+    Private Sub ShrinkBackground()
+        Height = Height - EnvironemtIndicatorPanel.Height
+    End Sub
+
+    Private Sub ShowDevelBackground()
+        EnvironemtIndicatorPanel.BackgroundImage = Backgrounds.DevelBackground
+        BackgroundImage = Backgrounds.DevelBackground
+    End Sub
+
+    Private Sub ShowValidationBackground()
+        EnvironemtIndicatorPanel.BackgroundImage = Backgrounds.ValidationBackground
+        BackgroundImage = Backgrounds.ValidationBackground
+    End Sub
+
+    Private Sub btnCreatePlateScheme_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles btnCreatePlateScheme.Click
 		Call frmSelectPlateSchemeName.Initialize(oFPConnection, oGtdbConnection)
 		frmSelectPlateSchemeName.Show()
 	End Sub

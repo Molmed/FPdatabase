@@ -270,6 +270,16 @@
     <Compile Include="PlateCoordinate.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\Backgrounds.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Backgrounds.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="UpgradeSupport.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -318,7 +328,16 @@
     <EmbeddedResource Include="frnSelectPlateSchemeName.resX">
       <DependentUpon>frnSelectPlateSchemeName.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Backgrounds.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Backgrounds.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />
@@ -334,6 +353,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\DevelBackground.PNG" />
+    <Content Include="Resources\ValidationBackground.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
